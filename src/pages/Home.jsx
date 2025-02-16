@@ -1,16 +1,29 @@
 import MovieCard from "../components/MovieCard";
-import { useState } from "react";
+import { useState, useEffect, use } from "react";
+import { getPopularMovies, searchMovies } from "../services/api";
 import "../css/Home.css";
 
 function Home() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [movies, setMovies] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const movies = [
-    { id: 1, title: "The Shawshank Redemption", year: 1994 },
-    { id: 2, title: "The Godfather", year: 1972 },
-    { id: 3, title: "Harry Potter and the Chamber of Secrets", year: 2002 },
-    { id: 4, title: "Avengers: Endgame", year: 2019 },
-  ];
+  useEffect(() => {
+    const fetchPopularMovies = async () => {
+      try {
+        const popularMovies = await getPopularMovies();
+        setMovies(popularMovies);
+      } catch (err) {
+        setError("There was an error loading the movies");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPopularMovies();
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
