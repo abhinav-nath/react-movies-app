@@ -15,8 +15,8 @@ function Home() {
         const popularMovies = await getPopularMovies();
         setMovies(popularMovies);
       } catch (err) {
-        setError("There was an error loading the movies");
         console.error(err);
+        setError("There was an error while loading the movies");
       } finally {
         setLoading(false);
       }
@@ -25,10 +25,22 @@ function Home() {
     fetchPopularMovies();
   }, []);
 
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
-    alert(`Searching for ${searchQuery}`);
-    setSearchQuery("");
+    if (!searchQuery.trim()) return;
+    if (loading) return;
+
+    setLoading(true);
+    try {
+      const searchResults = await searchMovies(searchQuery);
+      setMovies(searchResults);
+      setError(null);
+    } catch (err) {
+      console.error(err);
+      setError("There was an error while searching the movies");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
