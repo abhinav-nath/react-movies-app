@@ -1,8 +1,11 @@
-# React + Vite
+# React Movies App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a simple app built using React 19.
 
-Currently, two official plugins are available:
+To run this app on your local, add your [themoviedb](https://developer.themoviedb.org/docs/getting-started) API key [here](./src/services/api.js#L1)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Then run
+
+```
+npm run dev
+```
